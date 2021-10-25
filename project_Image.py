@@ -1,42 +1,35 @@
+import os
+import os.path
+import fnmatch
 from PIL import Image as PImage
 from glob import glob
 from os import listdir
 
-
 path = "/Users/brandon/Desktop/Holobox/Project_Holo/TestFiles/"
 
 def loadFiles(path):
-    # return array of files
-
+    # return list of file extensions in the working directory
     fileList = listdir(path)
-    loadedFiles = []
+    fileTypes = []
+
     for file in fileList:
-        currentFile = PImage.open(path + file)
-        loadedFiles.append(currentFile)
+        name, extension = os.path.splitext(file)
+        if (extension != '') and (("*" + extension) not in fileTypes):
+            fileTypes.append("*" + extension)
+            print(fileTypes)
 
-    return loadedFiles
+    return fileTypes
 
-fileArray = loadFiles(path)
+def filterFiles(path, fileTypes):
+    # return list of filtered lists with respect to filetype
+    filteredFiles = []
 
-for currentFile in fileArray:
-    currentFile.show()
+    for fileType in fileTypes:
+        files = fnmatch.filter(os.listdir(path), fileType)
+        filteredFiles.append(files)
+        print(filteredFiles)
 
+    return filteredFiles
 
-
-#types = ["*.gif", "*.png", "*.jpg", "*.mp4", "*.mp3", "*.mov"]
-
-# fileTypeArray = []
-
-#for type in types:
-#    thisFileType = glob.glob(type)
-#    fileTypeArray += thisFileType
-# "/Users/brandon/Downloads/test.jpg"
-#    tempImage = Image.open(type)
-#    tempImage.show()
-
-# print(fileTypeArray)
-
-
-
-
-
+file_types = loadFiles(path)
+filtered_files = filterFiles(path, file_types)
