@@ -1,5 +1,6 @@
 from image_transformer import ImageTransformer
-from util import save_image
+from rotation_utility import save_image
+from project_image import *
 import sys
 import os
 
@@ -24,7 +25,6 @@ import os
 # Output:
 #     image     : the rotated image
 
-
 # Input image path
 img_path = sys.argv[1]
 
@@ -42,7 +42,7 @@ if not os.path.isdir('output'):
     os.mkdir('output')
 
 # Iterate through rotation range
-for ang in xrange(0, rot_range):
+for ang in range(0, rot_range):
 
     # NOTE: Here we can change which angle, axis, shift
     
