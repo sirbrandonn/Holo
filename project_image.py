@@ -5,8 +5,6 @@ from PIL import Image as PImage
 from glob import glob
 from os import listdir
 
-path = "/Users/brandon/Desktop/Holobox/Project_Holo/TestFiles/"
-
 def loadFiles(path):
     # return list of file extensions in the working directory
     fileList = listdir(path)
@@ -30,6 +28,3 @@ def filterFiles(path, fileTypes):
         print(filteredFiles)
 
     return filteredFiles
-
-file_types = loadFiles(path)
-filtered_files = filterFiles(path, file_types)

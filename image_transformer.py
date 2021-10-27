@@ -25,6 +25,12 @@ import cv2
 #     2.        : http://jepsonsblog.blogspot.tw/2012/11/rotation-in-3d-using-opencvs.html
 
 
+# Perhaps store a rotation of an image and then display it instead of doing it real
+# time for every rotation
+
+# Recent cache of a limited amount of image manipulations of most recent
+# Delete least recently used if it as max
+
 class ImageTransformer(object):
     """ Perspective transformation class for image
         with shape (height, width, #channels) """

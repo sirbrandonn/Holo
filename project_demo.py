@@ -25,35 +25,50 @@ import os
 # Output:
 #     image     : the rotated image
 
+
+# ls ../ previous directory
+# ls ./ current directory
+
+# Relative file path
+path = "./TestFiles/"
+
 # Input image path
-img_path = sys.argv[1]
+file_types = loadFiles(path)
+filtered_files = filterFiles(path, file_types)
 
-# Rotation range
-rot_range = 360 if len(sys.argv) <= 2 else int(sys.argv[2])
+# More likely while-loop ... pointer to a file that is being displayed. Then have
+# another process that changes the pointer
+for fileList in filtered_files:
+    for file in fileList:
+        img_path = file
+        print(img_path)
 
-# Ideal image shape (w, h)
-img_shape = None if len(sys.argv) <= 4 else (int(sys.argv[3]), int(sys.argv[4]))
+        # Rotation range
+        rot_range = 360 if len(sys.argv) <= 2 else int(sys.argv[2])
 
-# Instantiate the class
-it = ImageTransformer(img_path, img_shape)
+        # Ideal image shape (w, h)
+        img_shape = None if len(sys.argv) <= 4 else (int(sys.argv[3]), int(sys.argv[4]))
 
-# Make output dir
-if not os.path.isdir('output'):
-    os.mkdir('output')
+        # Instantiate the class
+        it = ImageTransformer(path + img_path, img_shape)
 
-# Iterate through rotation range
-for ang in range(0, rot_range):
+        # Make output dir
+        if not os.path.isdir('output'):
+            os.mkdir('output')
 
-    # NOTE: Here we can change which angle, axis, shift
+        # Iterate through rotation range
+        for ang in range(0, rot_range):
+
+        # NOTE: Here we can change which angle, axis, shift
     
-    """ Example of rotating an image along y-axis from 0 to 360 degree 
-        with a 5 pixel shift in +X direction """
-    rotated_img = it.rotate_along_axis(phi = ang, dx = 5)
+            # Example of rotating an image along y-axis from 0 to 360 degree 
+            # with a 5 pixel shift in +X direction
+            rotated_img = it.rotate_along_axis(phi = ang, dx = 5)
 
-    """ Example of rotating an image along yz-axis from 0 to 360 degree """
-    #rotated_img = it.rotate_along_axis(phi = ang, gamma = ang)
+    # Example of rotating an image along yz-axis from 0 to 360 degree
+    #       rotated_img = it.rotate_along_axis(phi = ang, gamma = ang)
 
-    """ Example of rotating an image along z-axis(Normal 2D) from 0 to 360 degree """
-    #rotated_img = it.rotate_along_axis(gamma = ang)
+    # Example of rotating an image along z-axis(Normal 2D) from 0 to 360 degree
+    #       rotated_img = it.rotate_along_axis(gamma = ang)
 
-    save_image('output/{}.jpg'.format(str(ang).zfill(3)), rotated_img)
+            #save_image('output/{}.jpg'.format(str(ang).zfill(3)), rotated_img)
