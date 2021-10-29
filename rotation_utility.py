@@ -14,7 +14,6 @@ def load_image(img_path, shape=None):
     return img
 
 def save_image(img_path, directory, img):
-    os.chdir(directory)
     cv2.imwrite(img_path, img)
 
 def get_rad(theta, phi, gamma):

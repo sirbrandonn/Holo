@@ -1,8 +1,10 @@
 from image_transformer import ImageTransformer
 from rotation_utility import save_image
 from project_image import *
+import cv2
 import sys
 import os
+import imageio
 
 # Usage: 
 #     Change main function with ideal arguments
@@ -31,6 +33,7 @@ import os
 
 # Relative file path
 path = "./TestFiles/"
+output_path = "."
 
 # Input image path
 file_types = loadFiles(path)
@@ -38,11 +41,12 @@ filtered_files = filterFiles(path, file_types)
 
 # More likely while-loop ... pointer to a file that is being displayed. Then have
 # another process that changes the pointer
+# After computing all frames of the GIF - create the GIF
+if not os.path.isdir('output/gifs'):
+    os.mkdir('output/gifs')
+
 for fileList in filtered_files:
     for file in fileList:
-        img_path = file
-        print(img_path)
-
         # Rotation range
         rot_range = 360 if len(sys.argv) <= 2 else int(sys.argv[2])
 
@@ -50,25 +54,32 @@ for fileList in filtered_files:
         img_shape = None if len(sys.argv) <= 4 else (int(sys.argv[3]), int(sys.argv[4]))
 
         # Instantiate the class
-        it = ImageTransformer(path + img_path, img_shape)
+        it = ImageTransformer(path + file, img_shape)
 
         # Make output dir
         if not os.path.isdir('output'):
             os.mkdir('output')
 
         # Iterate through rotation range
-        for ang in range(0, rot_range):
+        f_name, ext = os.path.splitext(file)
+
+        if not os.path.isdir('output/' + f_name):
+            os.mkdir('output/' + f_name)
 
         # NOTE: Here we can change which angle, axis, shift
-    
             # Example of rotating an image along y-axis from 0 to 360 degree 
             # with a 5 pixel shift in +X direction
-            rotated_img = it.rotate_along_axis(phi = ang, dx = 5)
+
+        with imageio.get_writer('./output/gifs/' + f_name + ".gif", mode = 'I', fps = 10, duration = 0.1) as writer:
+            for ang in range(0, rot_range):
+                rotated_img = it.rotate_along_axis(phi = ang)
+                writer.append_data(rotated_img)
+
+                # if not os.path.isfile('./output/' + f_name + "/" + str(ang) + ".jpg"):
+                # cv2.imwrite('output/' + f_name + "/" + str(ang) + ".jpg", rotated_img)
 
     # Example of rotating an image along yz-axis from 0 to 360 degree
     #       rotated_img = it.rotate_along_axis(phi = ang, gamma = ang)
 
     # Example of rotating an image along z-axis(Normal 2D) from 0 to 360 degree
     #       rotated_img = it.rotate_along_axis(gamma = ang)
-
-            #save_image('output/{}.jpg'.format(str(ang).zfill(3)), rotated_img)
