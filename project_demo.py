@@ -1,10 +1,11 @@
 from image_transformer import ImageTransformer
-from rotation_utility import save_image
-from project_image import *
+from rotation_utility import *
+from load_files import *
 import cv2
 import sys
 import os
 import imageio
+
 
 # Usage: 
 #     Change main function with ideal arguments
@@ -42,6 +43,11 @@ filtered_files = filterFiles(path, file_types)
 # More likely while-loop ... pointer to a file that is being displayed. Then have
 # another process that changes the pointer
 # After computing all frames of the GIF - create the GIF
+
+# Make output dir
+if not os.path.isdir('output'):
+    os.mkdir('output')
+
 if not os.path.isdir('output/gifs'):
     os.mkdir('output/gifs')
 
@@ -56,10 +62,6 @@ for fileList in filtered_files:
         # Instantiate the class
         it = ImageTransformer(path + file, img_shape)
 
-        # Make output dir
-        if not os.path.isdir('output'):
-            os.mkdir('output')
-
         # Iterate through rotation range
         f_name, ext = os.path.splitext(file)
 
@@ -70,7 +72,7 @@ for fileList in filtered_files:
             # Example of rotating an image along y-axis from 0 to 360 degree 
             # with a 5 pixel shift in +X direction
 
-        with imageio.get_writer('./output/gifs/' + f_name + ".gif", mode = 'I', fps = 10, duration = 0.1) as writer:
+        with imageio.get_writer('./output/gifs/' + f_name + ".gif", mode = 'I', fps = 5, duration = 0.1) as writer:
             for ang in range(0, rot_range):
                 rotated_img = it.rotate_along_axis(phi = ang)
                 writer.append_data(rotated_img)
