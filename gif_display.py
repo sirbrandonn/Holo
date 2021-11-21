@@ -34,7 +34,7 @@ for root, dirs, files in os.walk("output/gifs"):
         cv2.imshow("gif", rgb)
         if ret:
             smoothed_gif_array = img_as_ubyte(gaussian(gif, sigma = 5, mode = 'constant', cval = 0.0, multichannel = 'False'))
-            smoothed_gif = Image.fromarray(smoothed_gif_array)
+            smoothed_gif = Image.fromarray(smoothed_gif_array).convert("RGB")
             cv2.imwrite('output/smoothed_gifs/' + "gif" + str(gif_number) + ".gif", smoothed_gif)
 
         gif_number += 1

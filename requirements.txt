@@ -1,0 +1,5 @@
+Pillow~=8.4.0
+scikit-image~=0.18.3
+imageio~=2.11.1
+numpy~=1.21.4
+mediapipe~=0.8.9
