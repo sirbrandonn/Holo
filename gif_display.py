@@ -10,12 +10,10 @@ if not os.path.isdir('output/smoothed_gifs'):
     os.mkdir('output/smoothed_gifs')
 
 smoothed_gif_path = "./output/smoothed_gifs/"
-
 file_types = loadFiles(gif_path)
 filtered_files = filterFiles(gif_path, file_types)
 
 gif_number = 1
-
 for root, dirs, files in os.walk("output/gifs"):
     for name in files:
         print(name)
@@ -26,7 +24,7 @@ for root, dirs, files in os.walk("output/gifs"):
         cap = cv2.VideoCapture(path)
         ret, gif = cap.read()
         print(gif)
-        
+
         rgb = cv2.cvtColor(gif, cv2.COLOR_BGR2RGB)
 
         print(type(rgb))
