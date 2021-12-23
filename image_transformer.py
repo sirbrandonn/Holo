@@ -1,4 +1,4 @@
-from rotation_utility import *
+from utility_functions import load_image, get_rad
 import numpy as np
 import cv2
 
@@ -51,7 +51,7 @@ class ImageTransformer(object):
         rtheta, rphi, rgamma = get_rad(theta, phi, gamma)
         
         # Get ideal focal length on z axis
-        # NOTE: Change this section to other axis if needed
+        # NOTE: Change this section to other axis if neededß
         d = np.sqrt(self.height**2 + self.width**2)
         self.focal = d / (2 * np.sin(rgamma) if np.sin(rgamma) != 0 else 1)
         dz = self.focal
@@ -59,7 +59,7 @@ class ImageTransformer(object):
         # Get projection matrix
         mat = self.get_M(rtheta, rphi, rgamma, dx, dy, dz)
         
-        return cv2.warpPerspective(self.image.copy(), mat, (self.width, self.height))
+        return cv2.warpPerspective(self.image.copy(), mat, (self.height, self.width))
 
 
     """ Get Perspective Projection Matrix """
