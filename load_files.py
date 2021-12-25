@@ -1,22 +1,20 @@
 import os
-import fnmatch
-from os import listdir
+from collections import defaultdict
 
-def loadFiles(path):
-    # Return a list of lists of files in the working directory
-    fileList = listdir(path)
-    fileTypes = []
-    filteredFiles = []
 
-    # Create a list of extensions in working directory
-    for file in fileList:
+def load_files(path):
+    """
+    Return a list of lists of files in the working directory
+    :param str path: Path to the target directory
+    :return list(list) Files in the Directory Partitioned by filetype
+    """
+    file_list = os.listdir(path)
+
+    file_map = defaultdict(list)
+
+    # Create a list of filetypes in the provided path and partition them by filetype
+    for file in file_list:
         name, extension = os.path.splitext(file)
-        if (extension != '') and (("*" + extension) not in fileTypes):
-            fileTypes.append("*" + extension)
+        file_map["*" + extension].append(file)
 
-    # Create a list of files according to extensions
-    for fileType in fileTypes:
-        files = fnmatch.filter(os.listdir(path), fileType)
-        filteredFiles.append(files)
-
-    return filteredFiles
+    return list(file_map.values())

@@ -1,4 +1,4 @@
-from load_files import loadFiles
+from load_files import load_files
 from PIL import Image
 from skimage import img_as_ubyte
 from skimage.filters import gaussian
@@ -14,7 +14,7 @@ if not os.path.isdir('./output/smoothed_gifs'):
 
 smoothed_gif_path = "./output/smoothed_gifs/"
 
-file_types = loadFiles(gif_path)
+file_types = load_files(gif_path)
 
 def display_gif():
 

@@ -1,5 +1,5 @@
 from image_transformer import ImageTransformer
-from load_files import loadFiles
+from load_files import load_files
 from PIL import Image as im
 import sys
 import os
@@ -36,7 +36,7 @@ path = "./TestFiles/"
 output_path = "."
 
 # Input image path
-filtered_files = loadFiles(path)
+filtered_files = load_files(path)
 
 # More likely while-loop ... pointer to a file that is being displayed. Then have
 # another process that changes the pointer
